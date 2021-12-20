@@ -174,3 +174,122 @@ GROUP BY name, continent, population HAVING population > ALL(
 
 ------------------------------------------------------------------------------------------------------------
 JOIN -- https://sqlzoo.net/wiki/The_JOIN_operation
+
+                    game
+id	    mdate	        stadium	                    team1	team2
+1001	8 June 2012	    National Stadium, Warsaw	POL	    GRE
+1002	8 June 2012	    Stadion Miejski (Wroclaw)	RUS	    CZE
+1003	12 June 2012	Stadion Miejski (Wroclaw)	GRE	    CZE
+1004	12 June 2012	National Stadium, Warsaw	POL	    RUS
+...
+
+                        goal
+matchid	teamid	player	                gtime
+1001	POL	    Robert Lewandowski	    17
+1001	GRE	    Dimitris Salpingidis	51
+1002	RUS	    Alan Dzagoev	        15
+1002	RUS	    Roman Pavlyuchenko	    82
+...
+
+        eteam
+id	teamname	coach
+POL	Poland	    Franciszek Smuda
+RUS	Russia	    Dick Advocaat
+CZE	Czech       Republic	Michal Bilek
+GRE	Greece	    Fernando Santos
+...
+
+1) Modify [SELECT * FROM goal WHERE player LIKE '%Bender';] to show the matchid and player name for all goals scored by Germany. To identify German players, check for: teamid = 'GER'
+Answer:
+SELECT matchid, player FROM goal 
+WHERE teamid = 'GER';
+
+2) Show id, stadium, team1, team2 for just game 1012
+Answer:
+SELECT id,stadium,team1,team2
+FROM game WHERE id = 1012;
+
+3) The code below shows the player (from the goal) & stadium name (from the game table) for every goal scored.
+    SELECT player,stadium FROM game JOIN goal ON (id=matchid);
+Modify it to show the player, teamid, stadium and mdate for every German goal.
+Answer:
+SELECT go.player,go.teamid,ga.stadium,ga.mdate
+FROM game ga JOIN goal go ON (ga.id=go.matchid)
+WHERE go.teamid = 'GER';
+
+4) Show the team1, team2 and player for every goal scored by a player called Mario player LIKE 'Mario%'
+Answer:
+SELECT ga.team1, ga.team2, go.player
+FROM game ga JOIN goal go ON (ga.id=go.matchid)
+WHERE player LIKE 'Mario%';
+
+5) Show player, teamid, coach, gtime for all goals scored in the first 10 minutes gtime<=10
+Answer:
+SELECT g.player, g.teamid, e.coach, g.gtime
+FROM goal g JOIN eteam e ON (g.teamid = e.id)
+WHERE g.gtime<=10;
+
+6) List the dates of the matches and the name of the team in which 'Fernando Santos' was the team1 coach.
+Answer:
+SELECT g.mdate, e.teamname FROM game g
+JOIN eteam e ON (g.team1 = e.id)
+WHERE e.coach = 'Fernando Santos';
+
+7) List the player for every goal scored in a game where the stadium was 'National Stadium, Warsaw'
+Answer:
+SELECT player FROM goal go
+JOIN game ga ON (go.matchid=ga.id)
+WHERE stadium = 'National Stadium, Warsaw';
+
+------------------------- More difficult questions -------------------------
+
+8) The example query shows all goals scored in the Germany-Greece quarterfinal.
+    SELECT player, gtime FROM game JOIN goal ON matchid = id 
+    WHERE (team1='GER' AND team2='GRE');
+Instead show the name of all players who scored a goal against Germany.
+Answer:
+SELECT DISTINCT player FROM game ga
+JOIN goal go ON go.matchid=ga.id 
+WHERE (go.teamid!='GER' AND (ga.team1='GER' OR ga.team2='GER'));
+
+9) Show teamname and the total number of goals scored.
+Answer:
+SELECT e.teamname, count(g.teamid)
+FROM eteam e JOIN goal g ON e.id=g.teamid
+GROUP BY e.teamname;
+
+10) Show the stadium and the number of goals scored in each stadium.
+Answer:
+SELECT ga.stadium, count(go.teamid) AS goals_scored FROM game ga
+JOIN goal go ON (go.matchid=ga.id)
+GROUP BY ga.stadium;
+
+11) For every match involving 'POL', show the matchid, date and the number of goals scored.
+Given:  SELECT matchid,mdate, team1, team2,teamid FROM game
+        JOIN goal ON matchid = id WHERE (team1 = 'POL' OR team2 = 'POL');
+Answer:
+SELECT matchid,mdate,count(mdate) FROM game JOIN goal ON matchid = id 
+WHERE (team1 = 'POL' OR team2 = 'POL') GROUP BY matchid,mdate;
+
+12) For every match where 'GER' scored, show matchid, match date and the number of goals scored by 'GER'
+Answer:
+SELECT matchid, mdate, count(mdate) FROM game JOIN goal ON matchid = id 
+WHERE (teamid='GER') GROUP BY matchid,mdate;
+
+13) List every match with the goals scored by each team as shown. This will use "CASE WHEN" which has not been explained in any previous exercises. Sort your result by mdate, matchid, team1 and team2.
+    mdate	        team1	score1	team2	score2
+    1  July 2012	ESP	    4	    ITA	    0
+    10 June 2012	ESP	    1	    ITA	    1
+    10 June 2012	IRL	    1	    CRO	    3
+    ...
+Notice in the query given every goal is listed. If it was a team1 goal then a 1 appears in score1, otherwise there is a 0. You could SUM this column to get a count of the goals scored by team1.
+Given:  SELECT mdate, team1,
+        CASE WHEN teamid=team1 THEN 1 ELSE 0 END score1
+        FROM game JOIN goal ON matchid = id;
+Answer: CLOSE -- 2 rows with score1 & score2 = 0 are being ommitted
+???????????????????????????????????????????????????????????????????????????????????????
+SELECT mdate, team1, sum(CASE WHEN teamid=team1 THEN 1 ELSE 0 END) score1,
+       team2, sum(CASE WHEN teamid=team2 THEN 1 ELSE 0 END) score2
+FROM game JOIN goal ON matchid = id
+GROUP BY mdate, matchid, team1, team2;
+???????????????????????????????????????????????????????????????????????????????????????
