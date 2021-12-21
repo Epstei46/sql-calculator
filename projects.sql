@@ -107,20 +107,30 @@ GROUP BY p.title, p.id;
 -- The following queries can be written using either a JOIN or a sub-query.
 
 -- Problem 1: How many scores for the News Aggregator project were above the average score?
-
--- Result:
+SELECT COUNT(grade) FROM grades
+WHERE project_title = 'News Aggregator' AND grade > (
+    SELECT AVG(grade) FROM grades
+    WHERE project_title = 'News Aggregator'
+); -- if we delete above line, AVG for all grades == 59 so result would be 0
+-- Result: 1
 
 
 
 -- Problem 2: How many scores for the Snake Game were equal to the maximum score?
-
--- Result:
+SELECT COUNT(grade) FROM grades
+WHERE grade = (
+    SELECT MAX(grade) FROM grades
+    WHERE project_title = 'Snake Game'
+);
+-- Result: 4
 
 
 
 -- Problem 3: Which projects have at least 5 grades in the grades table?
-
--- Result:
+SELECT p.title FROM projects p
+LEFT JOIN grades g ON (p.title = g.project_title)
+GROUP BY p.title HAVING COUNT(g.grade) > 5;
+-- Result: Snake Game
 
 
 
