@@ -1,5 +1,7 @@
 ------------------------BASIC INFO------------------------
+-- After going through the setup instrctions, I opened pgAdmin 4 to verify that the tables were created and to check what the names of the tables were, then I checked the data in each table (shown below).
 
+-- SELECT * FROM grades;
 ---------------------grades table---------------------
 --  id | student_github |  project_title  | grade
 -- ----+----------------+-----------------+-------
@@ -17,6 +19,7 @@
 --  12 | lgifs          | Snake Game      |    50
 --  13 | casks          | Snake Game      |    64
 
+-- SELECT * FROM projects;
 -----------------------------projects table-----------------------------
 --  id |      title      |                   description                    | max_grade
 -- ----+-----------------+--------------------------------------------------+-----------
@@ -24,6 +27,7 @@
 --   1 | Snake Game      | An interactive puzzle game                       | 50
 --   2 | News Aggregator | Custom news filter with auto-tagging system      | 10
 
+-- SELECT * FROM students;
 ----------------students table----------------
 --  id | first_name | last_name |  github
 -- ----+------------+-----------+-----------
@@ -31,20 +35,20 @@
 --   2 | Sarah      | Developer | sdevelops
 
 -- Problem 1: What is the average grade for the project called News Aggregator? Be sure to use the AVG aggregate function in your query.
-
--- Result:
+SELECT AVG(grade) FROM grades WHERE project_title = 'News Aggregator';
+-- Result: 30.0000000000000000
 
 
 
 -- Problem 2: What is the sum of all points that the entire class received on the project called Recipe Storage? Be sure to use the SUM aggregate function in your query.
-
--- Result:
+SELECT COALESCE(SUM(grade), 0) as sum FROM grades WHERE project_title = 'Recipe Storage';
+-- Result: 0
 
 
 
 -- Problem 3: How many total projects are there? Be sure to use the COUNT aggregate function in your query.
-
--- Result:
+SELECT COUNT(title) FROM projects;
+-- Result: 3
 
 
 
