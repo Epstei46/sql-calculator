@@ -1,5 +1,6 @@
-------------------------BASIC INFO------------------------
+---------------------------For Reference---------------------------
 -- After going through the setup instrctions, I opened pgAdmin 4 to verify that the tables were created and to check what the names of the tables were, then I checked the data in each table (shown below).
+-- To test my query, run 'psql projects' in the terminal, then copy-paste my query. '\q' to exit.
 
 -- SELECT * FROM grades;
 ---------------------grades table---------------------
@@ -34,6 +35,12 @@
 --   1 | Jane       | Hacker    | jhacks
 --   2 | Sarah      | Developer | sdevelops
 
+
+
+
+
+------------------------BASIC INFO------------------------
+
 -- Problem 1: What is the average grade for the project called News Aggregator? Be sure to use the AVG aggregate function in your query.
 SELECT AVG(grade) FROM grades WHERE project_title = 'News Aggregator';
 -- Result: 30.0000000000000000
@@ -53,14 +60,14 @@ SELECT COUNT(title) FROM projects;
 
 
 -- Problem 4: What is the maximum grade that students received on the project called News Aggregator? Be sure to use the MAX function in your query.
-
--- Result:
+SELECT MAX(grade) FROM grades WHERE project_title = 'News Aggregator';
+-- Result: 50
 
 
 
 -- Problem 5: What is the minimum project that any student received on ANY project? Be sure to use the MIN function in your query.
-
--- Result:
+SELECT MIN(grade) FROM grades;
+-- Result: 0
 
 
 
