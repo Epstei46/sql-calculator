@@ -1,5 +1,34 @@
 ------------------------BASIC INFO------------------------
--- Note: table names (grades, projects, students).
+
+---------------------grades table---------------------
+--  id | student_github |  project_title  | grade
+-- ----+----------------+-----------------+-------
+--   1 | jhacks         | News Aggregator |    10
+--   4 | sdevelops      | News Aggregator |    50
+--   2 | jhacks         | Snake Game      |     2
+--   3 | sdevelops      | Snake Game      |   100
+--   5 | tcodes         | Snake Game      |   100
+--   6 | tcodes         | Snake Game      |   100
+--   7 | alearns        | Snake Game      |     0
+--   8 | rpractices     | Snake Game      |   100
+--   9 | banalyzes      | Snake Game      |     0
+--  10 | ctypes         | Snake Game      |    97
+--  11 | wcodes         | Snake Game      |    96
+--  12 | lgifs          | Snake Game      |    50
+--  13 | casks          | Snake Game      |    64
+
+-----------------------------projects table-----------------------------
+--  id |      title      |                   description                    | max_grade
+-- ----+-----------------+--------------------------------------------------+-----------
+--   5 | Recipe Storage  | An app to let users keep track of family recipes | 150
+--   1 | Snake Game      | An interactive puzzle game                       | 50
+--   2 | News Aggregator | Custom news filter with auto-tagging system      | 10
+
+----------------students table----------------
+--  id | first_name | last_name |  github
+-- ----+------------+-----------+-----------
+--   1 | Jane       | Hacker    | jhacks
+--   2 | Sarah      | Developer | sdevelops
 
 -- Problem 1: What is the average grade for the project called News Aggregator? Be sure to use the AVG aggregate function in your query.
 
