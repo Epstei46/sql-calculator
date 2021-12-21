@@ -76,14 +76,28 @@ SELECT MIN(grade) FROM grades;
 ------------------------JOINs------------------------
 
 -- Problem 1: Produce a result set that shows each grade, the project title, and the student name for that grade. (You will need to JOIN the grades and students table.)
-
+SELECT CONCAT(s.first_name,' ',s.last_name) AS name, g.project_title, g.grade FROM students s
+JOIN grades g ON (s.github = g.student_github) ORDER BY name;
 -- Result:
+--       name       |  project_title  | grade
+-- -----------------+-----------------+-------
+--  Jane Hacker     | News Aggregator |    10
+--  Jane Hacker     | Snake Game      |     2
+--  Sarah Developer | News Aggregator |    50
+--  Sarah Developer | Snake Game      |   100
 
 
 
 -- Problem 2: Produce a result set that shows each project, project id, and the number of grades that exist for that project. You will need to JOIN the projects and grades table.
-
+SELECT p.title, p.id, COALESCE(COUNT(g.grade), 0) FROM projects p
+LEFT JOIN grades g ON (p.title = g.project_title)
+GROUP BY p.title, p.id;
 -- Result:
+--       title      | id | coalesce
+-- -----------------+----+----------
+--  Recipe Storage  |  5 |        0
+--  Snake Game      |  1 |       11
+--  News Aggregator |  2 |        2
 
 
 
