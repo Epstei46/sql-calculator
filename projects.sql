@@ -1,0 +1,105 @@
+------------------------BASIC INFO------------------------
+-- Note: table names (grades, projects, students).
+
+-- Problem 1: What is the average grade for the project called News Aggregator? Be sure to use the AVG aggregate function in your query.
+
+-- Result:
+
+
+
+-- Problem 2: What is the sum of all points that the entire class received on the project called Recipe Storage? Be sure to use the SUM aggregate function in your query.
+
+-- Result:
+
+
+
+-- Problem 3: How many total projects are there? Be sure to use the COUNT aggregate function in your query.
+
+-- Result:
+
+
+
+-- Problem 4: What is the maximum grade that students received on the project called News Aggregator? Be sure to use the MAX function in your query.
+
+-- Result:
+
+
+
+-- Problem 5: What is the minimum project that any student received on ANY project? Be sure to use the MIN function in your query.
+
+-- Result:
+
+
+
+
+
+------------------------JOINs------------------------
+
+-- Problem 1: Produce a result set that shows each grade, the project title, and the student name for that grade. (You will need to JOIN the grades and students table.)
+
+-- Result:
+
+
+
+-- Problem 2: Produce a result set that shows each project, project id, and the number of grades that exist for that project. You will need to JOIN the projects and grades table.
+
+-- Result:
+
+
+
+
+
+----------------Filtering Using Aggregates----------------
+-- The following queries can be written using either a JOIN or a sub-query.
+
+-- Problem 1: How many scores for the News Aggregator project were above the average score?
+
+-- Result:
+
+
+
+-- Problem 2: How many scores for the Snake Game were equal to the maximum score?
+
+-- Result:
+
+
+
+-- Problem 3: Which projects have at least 5 grades in the grades table?
+
+-- Result:
+
+
+
+
+
+-------------------Working with Strings-------------------
+
+-- Problem 1: You need to generate text for a grade report that will go out to each student. Produce a result set for students who received a grade of 90 or above that says "Congrats STUDENT_NAME, you received a SCORE on PROJECT_NAME". You will need to use string concatenation in SQL for this problem.
+
+-- Result:
+
+
+
+-- Problem 2: Produce a similar report as you did in problem #9, but instead, produce a result set for students who received a score of 70 or less. The report should say "Your assignment needs improvement, you received a SCORE on PROJECT_NAME".
+
+-- Result:
+
+
+
+-- Problem 3: There is another database that categorizes students with a student id which is their firstname-lastname. Note that this id is all lowercase with a dash in between. Produce a result set which is the id for the other database for each student. You will need to lower case the first and last name for each student and concatenate strings together to make the full ID.
+
+-- Result:
+
+
+--------------------Discussion Questions--------------------
+-- Using what you learned in the Advanced SQL videos, answer the following questions as comments in your database.sql file.
+
+-- Question 1: What is the significance of transactions in SQL? When would you want to use a transaction? What is the syntax for executing a transaction?
+
+-- Answer: 
+
+
+
+-- Question 2: What is the difference between implicit and explicit type conversion in SQL? Give an example of how you can execute explicit type conversion using SQL synax.
+
+-- Answer: 
