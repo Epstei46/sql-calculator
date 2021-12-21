@@ -1,4 +1,6 @@
----------------------------For Reference---------------------------
+-----------------------------------------------------------------
+--------------------------For Reference--------------------------
+-----------------------------------------------------------------
 -- After going through the setup instrctions, I opened pgAdmin 4 to verify that the tables were created and to check what the names of the tables were, then I checked the data in each table (shown below).
 -- To test my query, run 'psql projects' in the terminal, then copy-paste my query. '\q' to exit.
 
@@ -39,7 +41,9 @@
 
 
 
+----------------------------------------------------------
 ------------------------BASIC INFO------------------------
+----------------------------------------------------------
 
 -- Problem 1: What is the average grade for the project called News Aggregator? Be sure to use the AVG aggregate function in your query.
 SELECT AVG(grade) FROM grades WHERE project_title = 'News Aggregator';
@@ -73,7 +77,9 @@ SELECT MIN(grade) FROM grades;
 
 
 
+-----------------------------------------------------
 ------------------------JOINs------------------------
+-----------------------------------------------------
 
 -- Problem 1: Produce a result set that shows each grade, the project title, and the student name for that grade. (You will need to JOIN the grades and students table.)
 SELECT CONCAT(s.first_name,' ',s.last_name) AS name, g.project_title, g.grade FROM students s
@@ -103,7 +109,10 @@ GROUP BY p.title, p.id;
 
 
 
+----------------------------------------------------------
 ----------------Filtering Using Aggregates----------------
+----------------------------------------------------------
+
 -- The following queries can be written using either a JOIN or a sub-query.
 
 -- Problem 1: How many scores for the News Aggregator project were above the average score?
@@ -135,27 +144,51 @@ GROUP BY p.title HAVING COUNT(g.grade) > 5;
 
 
 
-
+----------------------------------------------------------
 -------------------Working with Strings-------------------
+----------------------------------------------------------
 
 -- Problem 1: You need to generate text for a grade report that will go out to each student. Produce a result set for students who received a grade of 90 or above that says "Congrats STUDENT_NAME, you received a SCORE on PROJECT_NAME". You will need to use string concatenation in SQL for this problem.
-
+SELECT CONCAT_WS(' ','Congrats',first_name,last_name,'you received a',grade,'on',project_title) as grade_report FROM students
+JOIN grades ON (github = student_github) WHERE grade >= 90
+ORDER BY first_name;
 -- Result:
+--                        grade_report
+-- -----------------------------------------------------------
+--  Congrats Sarah Developer you received a 100 on Snake Game
 
 
 
 -- Problem 2: Produce a similar report as you did in problem #9, but instead, produce a result set for students who received a score of 70 or less. The report should say "Your assignment needs improvement, you received a SCORE on PROJECT_NAME".
-
+SELECT CONCAT('Hey ',first_name,' ',last_name,'. Your assignment needs improvement, you received a ',grade,' on ',project_title) as grade_report FROM students
+JOIN grades ON (github = student_github) WHERE grade <= 70
+ORDER BY first_name;
 -- Result:
+--                                          grade_report
+-- ----------------------------------------------------------------------------------------------
+--  Hey Jane Hacker. Your assignment needs improvement, you received a 10 on News Aggregator
+--  Hey Jane Hacker. Your assignment needs improvement, you received a 2 on Snake Game
+--  Hey Sarah Developer. Your assignment needs improvement, you received a 50 on News Aggregator
 
 
 
 -- Problem 3: There is another database that categorizes students with a student id which is their firstname-lastname. Note that this id is all lowercase with a dash in between. Produce a result set which is the id for the other database for each student. You will need to lower case the first and last name for each student and concatenate strings together to make the full ID.
-
+SELECT CONCAT(LOWER(first_name),'-',LOWER(last_name))
+as id FROM students;
 -- Result:
+--        id
+-- -----------------
+--  jane-hacker
+--  sarah-developer
 
 
+
+
+
+------------------------------------------------------------
 --------------------Discussion Questions--------------------
+------------------------------------------------------------
+
 -- Using what you learned in the Advanced SQL videos, answer the following questions as comments in your database.sql file.
 
 -- Question 1: What is the significance of transactions in SQL? When would you want to use a transaction? What is the syntax for executing a transaction?
