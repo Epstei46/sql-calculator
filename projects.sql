@@ -209,3 +209,9 @@ as id FROM students;
 -- Question 2: What is the difference between implicit and explicit type conversion in SQL? Give an example of how you can execute explicit type conversion using SQL synax.
 
 -- Answer: 
+-- Implicit Type Conversion is when one data type is automatically converted to another data type by the database to execute a query, without user input. 
+-- Implicit Example (id column has integer values):
+-- SELECT * FROM table WHERE id = '42';
+-- Explicit Type Conversion is when one data type is converted to another data type using conversion function(s), which are provided by the user to tell the database engine to convert the data to a specified data type.
+-- Explicit Example (id column has integer values):
+-- SELECT * FROM table WHERE id = integer '42';
