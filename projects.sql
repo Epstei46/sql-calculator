@@ -189,11 +189,20 @@ as id FROM students;
 --------------------Discussion Questions--------------------
 ------------------------------------------------------------
 
--- Using what you learned in the Advanced SQL videos, answer the following questions as comments in your database.sql file.
+-- Using what you learned in the Advanced SQL Queries video (PluralSight), answer the following questions as comments in your database.sql file.
 
--- Question 1: What is the significance of transactions in SQL? When would you want to use a transaction? What is the syntax for executing a transaction?
+-- Question 1: (a) What is the significance of transactions in SQL? (b) When would you want to use a transaction? (c) What is the syntax for executing a transaction?
 
 -- Answer: 
+-- (a) Transactions make sure the updates ALL happen, or none of them will happen. So updates from open transactions are only made visible (to other transactions) after the entire transaction completes successfully. Only updating the database with completed transactions helps keep our database in a consistent state & helps maintain database integrity (guarantee of record).
+-- (b) Want to use transactions when making multiple related updates, especially involving a numeric transfer like taking money from one account and adding it to another account. If 2 separate UPDATE queries were made but there was an error with one of them, the other could still be processed and modify the database, which would be bad. Transactions only allow everything to happen IF there are no errors.
+-- (c)  BEGIN;
+--          UPDATE valid_statement;
+--      SAVEPOINT first_savepoint;
+--          UPDATE erroneous_statement;
+--      ROLLBACK TO first_savepoint;
+--          UPDATE correct_statement;
+--      COMMIT;
 
 
 
